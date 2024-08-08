@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Programming Quiz</title> <!-- Bootstrap CSS --> 
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Custom CSS --> 
+  <style>
+    img{
+    object-fit: contain;
+    }
+    #time{
+      background-color: black;
+      color:white;
+    }
+    #time:hover{
+background-color: rgb(129, 128, 128);
+color:rgb(34, 33, 33);
+cursor: pointer;
+    }
+  </style>
+ </head> 
+ <body class="bg-secondary"> 
+    <nav class="navbar navbar-light m-0 bg-transparent">
+        <div class="container">
+          <a class="navbar-brand m-auto" href="#">
+            <img src="Coding.png" alt="" width="180">
+          </a>
+        </div>
+      </nav>
+          <div id="time" class="alert  text-left d-inline mx-2 "> 
+          </div>
+  <div class="container my-5"> 
+   <!-- <h1 class="text-center my-4">Programming Quiz</h1>  -->
+   <div id="quiz-container" class="d-none"> 
+    <div id="question" class="mb-4 text-black font-weight-bold"></div> 
+    <div id="options" class="mx-2"></div> <!--<button id="next-button" class="btn btn-primary">Next</button>--> 
+   </div> 
+   <div id="start-container" class="text-center"> <button id="start-button" class="btn btn-success">Start Quiz</button> 
+   </div> 
+   <div id="score-container" class="text-center d-none"> 
+    <h2><span id="score">0</span></h2>
+     <button id="restart-button" class="btn btn-success">Restart Quiz</button> 
+   </div> 
+  
+<!-- History Container -->
+<div id="history-container" class="container mt-4">
+  <h2 class="history-heading">Score History</h2>
+  <div class="card">
+    <div class="card-body">
+      <ul id="history-list" class="list-group list-group-flush"></ul>
+    </div>
+  </div>
+</div>
+  
+  </div> <!-- Bootstrap JS and dependencies --> 
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> 
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> <!-- Custom JS --> 
+  <script src="script.js"></script> 
+ </body>
+</html>
