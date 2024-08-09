@@ -18,6 +18,9 @@ background-color: rgb(129, 128, 128);
 color:rgb(34, 33, 33);
 cursor: pointer;
     }
+    #history-container{
+      display: none;
+    }
   </style>
  </head> 
  <body class="bg-secondary"> 
@@ -39,7 +42,7 @@ cursor: pointer;
    <div id="start-container" class="text-center"> <button id="start-button" class="btn btn-success">Start Quiz</button> 
    </div> 
    <div id="score-container" class="text-center d-none"> 
-    <h2><span id="score">0</span></h2>
+    <h2 class="alert alert-dark"><span id="score">0</span></h2>
      <button id="restart-button" class="btn btn-success">Restart Quiz</button> 
    </div> 
   
