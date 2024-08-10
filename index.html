@@ -1,65 +1,190 @@
 <!doctype html>
-<html lang="en"> 
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Programming Quiz</title> <!-- Bootstrap CSS --> 
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Custom CSS --> 
-  <style>
-    img{
-    object-fit: contain;
-    }
-    #time{
-      background-color: black;
-      color:white;
-    }
-    #time:hover{
-background-color: rgb(129, 128, 128);
-color:rgb(34, 33, 33);
-cursor: pointer;
-    }
-    #history-container{
-      display: none;
-    }
-  </style>
- </head> 
- <body class="bg-secondary"> 
-    <nav class="navbar navbar-light m-0 bg-transparent">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Quiz</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        img {
+            object-fit: contain;
+        }
+
+        #time {
+            background-color: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        #time:hover {
+            background-color: rgb(129, 128, 128);
+            color: rgb(34, 33, 33);
+            cursor: pointer;
+        }
+
+        #history-container {
+            display: none;
+        }
+
+        .main {
+            border: 2px solid black;
+            max-width: 80vw;
+            padding: 25px;
+            background-color: rgb(18, 18, 18);
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        .m-container {
+            margin-bottom: 20px;
+        }
+
+        /* General styling for select elements */
+        select {
+            display: inline-block;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            background-color: #ffffff;
+            color: #495057;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        /* Styling for select elements on focus */
+        select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
+        /* Disabled and default options */
+        select option[disabled] {
+            color: #6c757d;
+            background-color: #e9ecef;
+        }
+
+        /* Styling for the container around select elements */
+        .m-container {
+            margin-bottom: 1rem;
+        }
+
+        span {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #f8f4f4;
+        }
+    </style>
+</head>
+
+<body class="bg-secondary">
+    <nav class="navbar navbar-light bg-transparent">
         <div class="container">
-          <a class="navbar-brand m-auto" href="#">
-            <img src="Coding.png" alt="" width="180">
-          </a>
+            <a class="navbar-brand m-auto" href="#">
+                <img src="Coding.png" alt="" width="180">
+            </a>
         </div>
-      </nav>
-          <div id="time" class="alert  text-left d-inline mx-2 "> 
-          </div>
-  <div class="container my-5"> 
-   <!-- <h1 class="text-center my-4">Programming Quiz</h1>  -->
-   <div id="quiz-container" class="d-none"> 
-    <div id="question" class="mb-4 text-black font-weight-bold"></div> 
-    <div id="options" class="mx-2"></div> <!--<button id="next-button" class="btn btn-primary">Next</button>--> 
-   </div> 
-   <div id="start-container" class="text-center"> <button id="start-button" class="btn btn-success">Start Quiz</button> 
-   </div> 
-   <div id="score-container" class="text-center d-none"> 
-    <h2 class="alert alert-dark"><span id="score">0</span></h2>
-     <button id="restart-button" class="btn btn-success">Restart Quiz</button> 
-   </div> 
-  
-<!-- History Container -->
-<div id="history-container" class="container mt-4">
-  <h2 class="history-heading">Score History</h2>
-  <div class="card">
-    <div class="card-body">
-      <ul id="history-list" class="list-group list-group-flush"></ul>
+    </nav>
+
+    <div class="container my-5 main">
+        <div id="time" class="text-left mb-4"></div>
+        <div class="m-container">
+            <span>Choose the category</span>
+            <select id="myselect" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="9">General Knowledge</option>
+                <option value="10">Books</option>
+                <option value="11">Film</option>
+                <option value="12">Music</option>
+                <option value="13">Musicals & Theatres</option>
+                <option value="14">Television</option>
+                <option value="15">Video Games
+                </option>
+                <option value="16">Board Games
+                </option>
+                <option value="17">Science & Nature
+                </option>
+                
+                <option value="18">Computers
+                </option>
+                <option value="19">Mathematics
+                </option>
+                <option value="20">Mythology</option>
+                <option value="21">Sports
+                </option>
+                <option value="22">Geography
+                </option>
+                <option value="23">History
+                </option>
+                <option value="24">Politics
+                </option>
+                <option value="25">Art</option>
+                <option value="26">Celebrities
+                </option>
+                <option value="27">Animals
+                </option>
+                <option value="28">Vehicles
+                </option>
+                <option value="29">Comics
+                </option>
+                <option value="30">Gadgets
+                </option>
+                <option value="31">Japanese Anime & Manga
+                </option>
+                <option value="32">Cartoon&Animations
+                </option>
+                
+
+
+            </select><br><br>
+
+            <span>Choose the level</span>
+            <select id="level" required>
+                <option value="" disabled selected>Select a level</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+
+        <div id="start-container" class="text-center">
+            <button id="start-button" class="btn btn-success">Start Quiz</button>
+        </div>
+
+        <div id="quiz-container" class="d-none">
+            <div id="question" class="mb-4 text-white font-weight-bold"></div>
+            <div id="options" class="mx-2"></div>
+        </div>
+
+        <div id="score-container" class="text-center d-none">
+            <h2><span id="score">0</span></h2>
+            <button id="restart-button" class="btn btn-success">Restart Quiz</button>
+        </div>
     </div>
-  </div>
-</div>
-  
-  </div> <!-- Bootstrap JS and dependencies --> 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> <!-- Custom JS --> 
-  <script src="script.js"></script> 
- </body>
+
+    <!-- History Container -->
+    <div id="history-container" class="container mt-4">
+        <h2 class="history-heading">Score History</h2>
+        <div class="card">
+            <div class="card-body">
+                <ul id="history-list" class="list-group list-group-flush"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+
 </html>
