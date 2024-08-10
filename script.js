@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = document.getElementById('myselect').value;
         
         const level = document.getElementById('level').value;
-        questionElement.innerHTML=`<img src='loading.svg' width='56px' id='loading' style='margin-left:48%'>`;
+        questionElement.innerHTML=`<img src='loading.svg' width='56px' id='loading' style='margin-left:45%'>`;
 
         fetch(`https://opentdb.com/api.php?amount=50&category=${category}&difficulty=${level}&type=multiple`)
             .then(response => response.json())
