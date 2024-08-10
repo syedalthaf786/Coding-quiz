@@ -82,6 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayQuestion(questions[currentQuestionIndex]);
                 } else {
                     console.error('No questions are available');
+                    alert('No questions are available');
+                    location.reload();
                 }
             })
             .catch(error => console.error('Error fetching quiz questions:', error));
