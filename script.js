@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const level = document.getElementById('level').value;
 
-        fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${level}&type=multiple`)
+        fetch(`https://opentdb.com/api.php?amount=50&category=${category}&difficulty=${level}&type=multiple`)
             .then(response => response.json())
             .then(data => {
                 questions = data.results;
