@@ -9,25 +9,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restart-button');
     const historyContainer =document.querySelector('#history-container');
     const historyList = document.getElementById('history-list');
-
+    const conatiner=document.querySelector('.m-container');
     let currentQuestionIndex = 0;
     let questions = [];
     let score = 0;
     let history = [];
-    startButton.addEventListener('click', startQuiz);
+
+    startButton.addEventListener('click', () => {
+        // Validate selections
+        
+        const category = document.getElementById('myselect').value;
+        const level = document.getElementById('level').value;
+
+        if (category === "" || level === "") {
+            alert("Please select both a category and a difficulty level.");
+        } else {
+            
+            startQuiz();
+        }
+    });
+
     restartButton.addEventListener('click', restartQuiz);
-    
+
     function updateCurrentTime() {
-      const currentTime = new Date();
-      const hours = currentTime.getHours();
-      const minutes = currentTime.getMinutes();
-      const seconds = currentTime.getSeconds();
-      const timeString = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-      document.getElementById('time').textContent = timeString;
+        const currentTime = new Date();
+        let hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes();
+        const seconds = currentTime.getSeconds();
+    
+        // Determine AM or PM
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+        // Convert hours from 24-hour to 12-hour format
+        hours = hours % 12;
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+    
+        // Format minutes and seconds
+        const minutesString = minutes.toString().padStart(2, '0');
+        const secondsString = seconds.toString().padStart(2, '0');
+    
+        // Create time string
+        const timeString = `${hours}:${minutesString}:${secondsString} ${ampm}`;
+    
+        // Update the time element
+        document.getElementById('time').textContent = timeString;
     }
     
-    setInterval(updateCurrentTime, 1000);  
-     
+
+    setInterval(updateCurrentTime, 1000);
+
     function startQuiz() {
         startContainer.classList.add('d-none');
         quizContainer.classList.remove('d-none');
@@ -35,15 +65,24 @@ document.addEventListener('DOMContentLoaded', () => {
         score = 0;
         scoreElement.textContent = score;
         currentQuestionIndex = 0;
+        conatiner.style.display='none';
         fetchQuestions();
     }
 
     function fetchQuestions() {
-        fetch('https://opentdb.com/api.php?amount=10&category=18&type=multiple') 
+        const category = document.getElementById('myselect').value;
+        
+        const level = document.getElementById('level').value;
+
+        fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${level}&type=multiple`)
             .then(response => response.json())
             .then(data => {
                 questions = data.results;
-                displayQuestion(questions[currentQuestionIndex]);
+                if (questions.length > 0) {
+                    displayQuestion(questions[currentQuestionIndex]);
+                } else {
+                    console.error('No questions are available');
+                }
             })
             .catch(error => console.error('Error fetching quiz questions:', error));
     }
@@ -53,11 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         optionsElement.innerHTML = '';
         const options = [...question.incorrect_answers, question.correct_answer];
-        options.sort(() => Math.random() - 0.5); 
+        options.sort(() => Math.random() - 0.5);
         options.forEach(option => {
             const button = document.createElement('button');
             button.className = 'btn btn-secondary';
-            button.style.margin = '5px'
+            button.style.margin = '5px';
             button.textContent = option;
             button.addEventListener('click', () => checkAnswer(button, option, question.correct_answer));
             optionsElement.appendChild(button);
@@ -65,26 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkAnswer(button, selectedOption, correctAnswer) {
-       
         Array.from(optionsElement.children).forEach(btn => btn.disabled = true);
 
         if (selectedOption === correctAnswer) {
-            button.classList.add('btn-success'); // Add success class to correct button
+            button.classList.add('btn-success');
             score++;
             scoreElement.textContent = score;
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
-                setTimeout(() => displayQuestion(questions[currentQuestionIndex]), 1000); // Display next question after 1 second
+                setTimeout(() => displayQuestion(questions[currentQuestionIndex]), 1000);
             } else {
-                setTimeout(endQuiz, 1000); // End quiz after 1 second
+                setTimeout(endQuiz, 1000);
             }
         } else {
-            button.classList.add('btn-danger'); // Add danger class to wrong button
+            button.classList.add('btn-danger');
             const correctButton = Array.from(optionsElement.children).find(btn => btn.textContent === correctAnswer);
             if (correctButton) {
-                correctButton.classList.add('btn-success'); // Highlight correct answer
+                correctButton.classList.add('btn-success');
             }
-            setTimeout(endQuiz, 1000); // End quiz after 1 second
+            setTimeout(endQuiz, 1000);
         }
     }
 
@@ -93,16 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreContainer.classList.remove('d-none');
         displayScoreMessage(score);
         storeHistory(score);
-        historyContainer.style.display="block";
+        historyContainer.style.display = "block";
+        conatiner.style.display='block';
     }
 
     function displayScoreMessage(score) {
-        if (score > 20) {
-            scoreElement.innerHTML = `Excellent try! Your score is ${score}. Try again!`;
-        } else if (score > 15) {
-            scoreElement.innerHTML = `Good job! Your score is ${score}. Try again!`;
+        if (score > 7) {
+            alert( `Excellent try! Your score is ${score}. Try again!`);
+        } else if (score > 4) {
+            alert(`Good job! Your score is ${score}. Try again!`);
         } else {
-            scoreElement.innerHTML = `Your score is ${score}. Try again!`;
+            alert(`Your score is ${score}. Try again!`);
         }
     }
 
@@ -110,45 +149,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const timestamp = new Date().toLocaleString();
         history.push({ score, timestamp });
         displayHistory();
-      }
-      
-      function displayHistory() {
+    }
+
+    function displayHistory() {
         historyList.innerHTML = '';
         history.forEach((attempt, index) => {
-          const listItem = document.createElement('li');
-          listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-          listItem.innerHTML = `
-            <span class="text-muted">Attempt ${index + 1}</span>
-            <span class="badge badge-pill badge-success">${attempt.score}</span>
-            <span class="text-muted">${attempt.timestamp}</span>
-          `;
-          // const detailsButton = document.createElement('button');
-          // detailsButton.className = 'btn btn-sm btn-info';
-          // detailsButton.textContent = 'Details';
-          // detailsButton.addEventListener('click', () => {
-          //   showDetails(index);
-          // });
-          // listItem.appendChild(detailsButton);
-      
-          const deleteButton = document.createElement('button');
-          deleteButton.className = 'btn btn-sm btn-danger';
-          deleteButton.textContent = 'Delete';
-          deleteButton.addEventListener('click', () => {
-            deleteAttempt(index);
-          });
-          listItem.appendChild(deleteButton);
-      
-          historyList.appendChild(listItem);
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+            listItem.innerHTML = `
+                <span class="text-muted">Attempt ${index + 1}</span>
+                <span class="badge badge-pill badge-success">score:${attempt.score}</span>
+                <span class="text-muted">${attempt.timestamp}</span>
+            `;
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'btn btn-sm btn-danger';
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', () => {
+                deleteAttempt(index);
+            });
+            listItem.appendChild(deleteButton);
+            historyList.appendChild(listItem);
         });
-      }
-      
-      
-      function deleteAttempt(index) {
+    }
+
+    function deleteAttempt(index) {
         history.splice(index, 1);
         displayHistory();
-      }  
-      function restartQuiz() {
+    }
+
+    function restartQuiz() {
         startQuiz();
-        historyContainer.style.display="none";
+        historyContainer.style.display = "none";
     }
 });
